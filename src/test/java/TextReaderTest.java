@@ -1,6 +1,7 @@
 
 import org.junit.Assert;
 import org.junit.Test;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.nio.charset.StandardCharsets;
 
@@ -16,8 +17,7 @@ public class TextReaderTest extends Assert {
     @Test
     public void get_words_number_incorrect_test () {
         TextReader tr = new TextReader();
-        byte[] test_byte_data = null;
-        tr.setDataBytes(test_byte_data);
+        tr.setDataBytes(null);
         Assert.assertEquals(tr.get_words_number(), 0);
     }
     @Test
@@ -36,14 +36,16 @@ public class TextReaderTest extends Assert {
     @Test
     public void setDataBytes_incorrect_test () {
         TextReader tr = new TextReader();
-        byte[] test_data = null;
-        tr.setDataBytes(test_data);
+        tr.setDataBytes(null);
+        Assert.assertNull(tr.words_array);
     }
 
     @Test
     public void setDataBytes_correct_test () {
         TextReader tr = new TextReader();
-        byte[] test_data = "fuhd fd uf".getBytes(StandardCharsets.UTF_8);
+        String test_text = "fuhd fd uf";
+        byte[] test_data = test_text.getBytes(StandardCharsets.UTF_8);
         tr.setDataBytes(test_data);
+        Assert.assertEquals(tr.words_array, Arrays.asList(test_text.split("[\\s]")));
     }
 }
